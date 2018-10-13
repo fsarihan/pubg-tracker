@@ -8,10 +8,11 @@ import { AppComponent } from './app.component';
 import { CustomerComponent } from './customer/customer.component';
 import { NavComponent } from './nav/nav.component';
 import { UserComponent } from './user/user.component';
+import { HomepageComponent } from './homepage/homepage.component';
 
 const routes: Routes = [
+  { path: '', component: HomepageComponent },
   { path: 'matches', component: UserComponent },
-  { path: '', redirectTo: 'matches', pathMatch: 'full' },
   { path: 'match/:matchID', component: UserComponent },
 ];
 @NgModule({
@@ -19,7 +20,8 @@ const routes: Routes = [
     AppComponent,
     CustomerComponent,
     NavComponent,
-    UserComponent
+    UserComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,
