@@ -1,0 +1,49 @@
+<h1>Maçlar</h1>
+<ng-container *ngIf="singleMatch; else elseTemplate">
+  <button class="btn btn-primary" [routerLink]="[ '/matches']">Geri Dön</button>
+  <div class="card-columns">
+    <ng-container *ngFor="let item of singleMatch.included">
+      <div *ngIf="item.type == 'participant'">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{item.attributes.stats.name}}</h5>
+            <p class="card-text">
+              Sıralama: {{item.attributes.stats.winPlace}} <br />
+              Öldürmeler: {{item.attributes.stats.kills}} <br />
+              Assistler: {{item.attributes.stats.assists}} <br />
+              Düşürmeler: {{item.attributes.stats.name}} <br />
+              Verdiği Hasar: {{item.attributes.stats.damageDealt.toFixed(2)}} <br />
+              Puan: {{((100 - item.attributes.stats.winPlace)) + item.attributes.stats.kills * 10 + item.attributes.stats.assists }}
+            </p>
+            <p class="card-text"><small class="text-muted">Player ID: {{item.attributes.stats.playerId}}</small></p>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-template #elseTemplate>
+  <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" class="table row-border hover">
+    <thead>
+      <tr>
+        <th scope="col">Map</th>
+        <th scope="col">Oyun Türü</th>
+        <th scope="col">Custom</th>
+        <th scope="col">Süre</th>
+        <th scope="col">Başlangıç</th>
+        <th scope="col">Aksiyon</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let match of matchesReturn">
+        <td>{{match.data.attributes.mapName}}</td>
+        <td>{{match.data.attributes.gameMode}}</td>
+        <td>{{match.data.attributes.isCustomMatch}}</td>
+        <td>{{(match.data.attributes.duration / 60).toFixed(0)}} dakika</td>
+        <td>{{match.data.attributes.createdAt}}</td>
+        <td><button class="btn btn-primary" [routerLink]="[ '/match', match.data.id]">Görüntüle</button></td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>

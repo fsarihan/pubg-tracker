@@ -1,0 +1,10 @@
+<strong *ngIf="selectedCustomer; else elseBlock">{{selectedCustomer.firstName}} {{selectedCustomer.lastName}} Seçtiniz</strong>
+<ul>
+  <li *ngFor="let customer of customers"  (click)="selectCustomer(customer)">
+    {{customer.firstName}}
+  </li>
+</ul>
+<ng-template #elseBlock>
+  Seçim yapılmadı.
+</ng-template>
+
