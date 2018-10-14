@@ -9,6 +9,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { NavComponent } from './nav/nav.component';
 import { UserComponent } from './user/user.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { MatchOrderPipe } from './user/match-order.pipe';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
     CustomerComponent,
     NavComponent,
     UserComponent,
-    HomepageComponent
+    HomepageComponent,
+    MatchOrderPipe
   ],
   imports: [
     BrowserModule,

@@ -39,13 +39,12 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.dtOptions = {
       searching: false,
-      order: [[ 3, 'asc' ]]
+      order: [[4, 'desc']]
     };
     this.activatedRoute.params.subscribe(params => {
       const matchID = params['matchID'];
       const dynamicMatchPath = this.matchPath + matchID;
       this.http.get(dynamicMatchPath, httpOptions).subscribe(matchDetail => {
-        console.log(JSON.stringify(matchDetail));
         this.singleMatch = matchDetail;
       });
     });
@@ -61,7 +60,6 @@ export class UserComponent implements OnInit {
             this.dtTriggerTrig(this.count, this.matches.length);
           }, error => {
             this.count++;
-            console.log(error);
             this.dtTriggerTrig(this.count, this.matches.length);
           });
       }
@@ -69,5 +67,13 @@ export class UserComponent implements OnInit {
   }
   showMatch(matchID: string) {
     alert(matchID);
+  }
+  calculatePoint(place, kills, damage, totalPlayer) {
+    totalPlayer = totalPlayer / 2;
+    const placePoint = (totalPlayer - place + 1) * (totalPlayer / 10);
+    const killX = ((totalPlayer) * (totalPlayer / 10)) / 20;
+    const killPoint = killX * kills;
+    const damagePoint = damage / 200;
+    return placePoint + killPoint + damagePoint;
   }
 }

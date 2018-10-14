@@ -1,8 +1,8 @@
 <h1>Maçlar</h1>
 <ng-container *ngIf="singleMatch; else elseTemplate">
-  <button class="btn btn-primary" [routerLink]="[ '/matches']">Geri Dön</button>
+  <button class="btn btn-primary" [routerLink]="[ '/matches']">Geri Dön</button> <br />
   <div class="card-columns">
-    <ng-container *ngFor="let item of singleMatch.included">
+    <ng-container *ngFor="let item of singleMatch.included | matchOrder">
       <div *ngIf="item.type == 'participant'">
         <div class="card">
           <div class="card-body">
@@ -11,14 +11,13 @@
               Sıralama: {{item.attributes.stats.winPlace}} <br />
               Öldürmeler: {{item.attributes.stats.kills}} <br />
               Assistler: {{item.attributes.stats.assists}} <br />
-              Düşürmeler: {{item.attributes.stats.name}} <br />
+              Düşürmeler: {{item.attributes.stats.DBNOs}} <br />
               Verdiği Hasar: {{item.attributes.stats.damageDealt.toFixed(2)}} <br />
-              Puan: {{((100 - item.attributes.stats.winPlace)) + item.attributes.stats.kills * 10 + item.attributes.stats.assists }}
+              Puan: {{calculatePoint(item.attributes.stats.winPlace, item.attributes.stats.kills, item.attributes.stats.damageDealt, singleMatch.included.length).toFixed(0)}}
             </p>
             <p class="card-text"><small class="text-muted">Player ID: {{item.attributes.stats.playerId}}</small></p>
           </div>
         </div>
-
       </div>
     </ng-container>
   </div>
@@ -41,7 +40,7 @@
         <td>{{match.data.attributes.gameMode}}</td>
         <td>{{match.data.attributes.isCustomMatch}}</td>
         <td>{{(match.data.attributes.duration / 60).toFixed(0)}} dakika</td>
-        <td>{{match.data.attributes.createdAt}}</td>
+        <td>{{match.data.attributes.createdAt | date:"dd/MM/yy HH:mm"}}</td>
         <td><button class="btn btn-primary" [routerLink]="[ '/match', match.data.id]">Görüntüle</button></td>
       </tr>
     </tbody>
